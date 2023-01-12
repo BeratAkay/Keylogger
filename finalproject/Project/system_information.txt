@@ -1,0 +1,18 @@
+Public IP Address: 5.177.153.190
+Processor: Intel64 Family 6 Model 158 Stepping 10, GenuineIntel
+System: Windows 10.0.19044
+Machine: AMD64
+Hostname: DESKTOP-HO7SPQ3
+Private IP Address: 192.168.43.234
+Public IP Address: 85.153.230.168
+Processor: Intel64 Family 6 Model 158 Stepping 10, GenuineIntel
+System: Windows 10.0.19044
+Machine: AMD64
+Hostname: DESKTOP-HO7SPQ3
+Private IP Address: 192.168.1.5
+Public IP Address: 85.153.230.168
+Processor: Intel64 Family 6 Model 158 Stepping 10, GenuineIntel
+System: Windows 10.0.19044
+Machine: AMD64
+Hostname: DESKTOP-HO7SPQ3
+Private IP Address: 192.168.1.5
